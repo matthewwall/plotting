@@ -1,4 +1,16 @@
 this is an attempt to evaluate plotting tools using a real data set.
+although there are many packages available, this review focuses primarily
+on those based on d3.
+
+
+how to view
+
+open this file in a web browser:
+
+trials/index.html
+
+
+data set
 
 the data are from weewx usage.  the original data are in the file called
 'data'.  a json version is 'data.json'.
