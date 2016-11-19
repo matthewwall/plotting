@@ -1,0 +1,39 @@
+this is an attempt to evaluate plotting tools using a real data set.
+
+the data are from weewx usage.  the original data are in the file called
+'data'.  a json version is 'data.json'.
+
+the process.pl script takes the original data and formats them for each
+plotting tool, as necessary.
+
+
+performance on large data set
+
+nvd3 - takes multiple minutes to display.  unusable.
+rickshaw - display immediately but no data
+morris - no separate loading
+plottable - works.  slightly sluggish.
+dygraph - works very well
+metricsgraphics - slow.  legend does not work
+c3 - long time to display, then sluggish legend
+
+
+some of the options for consideration:
+
+jscharts.com - not free
+highcharts.com - free for personal use only
+fusion charts http://fusioncharts.com - free for personal use only
+plotly
+bokeh
+D3.js http://d3js.org
+n3-charts - for angular
+chartjs.org http://www.chartjs.org/
+chartist.js http://gionkunz.github.io/chartist-js
+dygraphs http://dygraphs.com (has lower context scroller, poll using setTimeout)
+flot http://flotcharts.org (ajax data, poll using setTimeout, used by emoncms)
+jquery sparklines http://omnipotent.net/jquery.sparkline/#s-about
+nvd3 (d3) http://nvd3.org (has line with viewfinder)
+rickshaw timeseries (d3) http://code.shutterstock.com/rickshaw/examples/
+cubism timeseries (last commit 2 yrs ago) https://square.github.io/cubism/
+morris (jquery, raphael) http://morrisjs.github.io/morris.js/
+plottable (d3) http://plottablejs.org/examples/
