@@ -1,0 +1,128 @@
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>rickshaw</title>
+  <style>
+body {
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 10pt;
+  background-color: #ffffff;
+}
+h1 {
+  font-size: 110%;
+  font-weight: bold;
+}
+h2 {
+  font-size: 100%;
+  font-weight: bold;
+}
+  </style>
+
+  <link type="text/css" rel="stylesheet" href="rickshaw-master/rickshaw.min.css">
+
+  <script src="jquery-1.12.3.min.js"></script>
+  <script src="jquery-ui-1.11.4/jquery-ui.min.js"></script>
+  <script src="d3-3.5.16/d3.min.js"></script>
+  <script src="d3-3.5.16/d3.layout.min.js"></script>
+  <script src="rickshaw-master/rickshaw.min.js"></script>
+</head>
+<body>
+
+<h1>Rickshaw</h1>
+
+<style>
+#chart_container {
+    display: inline-block;
+    font-family: Arial, Helvetica, sans-serif;
+}
+#chart {
+    float: left;
+}
+#legend {
+    float: left;
+    margin-left: 15px;
+}
+#offset_form {
+    float: left;
+    margin: 2em 0 0 15px;
+    font-size: 13px;
+}
+#y_axis {
+    float: left;
+    width: 40px;
+}
+</style>
+
+<div id="chart_container">
+    <div id="y_axis"></div>
+    <div id="chart"></div>
+    <div id="legend"></div>
+    <form id="offset_form" class="toggler">
+        <input type="radio" name="offset" id="lines" value="lines" checked>
+        <label class="lines" for="lines">lines</label><br>
+        <input type="radio" name="offset" id="stack" value="zero">
+        <label class="stack" for="stack">stack</label>
+    </form>
+</div>
+
+<script>
+var palette = new Rickshaw.Color.Palette();
+
+var labels = ["1wire","AcuLink","AcuLinkBridge","AcuRite","AcuRiteInternetBridge","Csv","Custom","DL4Logger","FileParse","FineOffsetUSB","Hackulink","Interceptor","KLP","KlimaLogg","Mcp2515","Meteostick","Mysql","Netlink","OWFS","ObserverIP","PeetBros","Raspberry_pi","RfxCmd","RfxCmdMB","Si1000","Simulator","SocketLogger","TE923","Ultimeter","Vantage","VantagePro2","VueISS","W0CHP","WMR100","WMR100EXT","WMR200","WMR300","WMR9x8","WS1","WS23xx","WS28xx","WS981","WX_LSVA","Wanet3","WeatherLink","WeatherLinkIP","netatmo","observerip","wanet3","totals"];
+var series = [];
+for(var i=0; i<labels.length; i++) {
+    series[i] = { "name": labels[i], "color": palette.color(), "data": [] }
+}
+
+var graph = new Rickshaw.Graph({
+    element: document.querySelector("#chart"),
+    width: 800,
+    height: 1000,
+    renderer: 'line',
+    series: series
+});
+
+var x_axis = new Rickshaw.Graph.Axis.Time( { graph: graph } );
+
+var y_axis = new Rickshaw.Graph.Axis.Y( {
+    graph: graph,
+    orientation: 'left',
+    tickFormat: Rickshaw.Fixtures.Number.formatKMBT,
+    element: document.getElementById('y_axis'),
+} );
+
+var legend = new Rickshaw.Graph.Legend( {
+    element: document.querySelector('#legend'),
+    graph: graph
+} );
+
+var offsetForm = document.getElementById('offset_form');
+
+offsetForm.addEventListener('change', function(e) {
+    var offsetMode = e.target.value;
+
+    if (offsetMode == 'lines') {
+         graph.setRenderer('line');
+         graph.offset = 'zero';
+    } else {
+         graph.setRenderer('stack');
+         graph.offset = offsetMode;
+    }       
+    graph.render();
+}, false);
+
+graph.render();
+
+$.getJSON("rickshaw-data.json", {}, function(response) {
+    for(var i=0; i<response.length; i++) {
+        graph.series[i].data = response[i].data;
+    }
+    graph.update();
+});
+
+</script>
+
+</body>
+</html>
+
+

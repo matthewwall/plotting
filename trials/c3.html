@@ -1,0 +1,56 @@
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>C3</title>
+  <style>
+body {
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 10pt;
+  background-color: #ffffff;
+}
+h1 {
+  font-size: 110%;
+  font-weight: bold;
+}
+h2 {
+  font-size: 100%;
+  font-weight: bold;
+}
+  </style>
+
+  <link type="text/css" rel="stylesheet" href="c3-master/c3.min.css">
+
+  <script src="d3-3.5.16/d3.min.js"></script>
+  <script src="d3-3.5.16/d3.layout.min.js"></script>
+  <script src="c3-master/c3.min.js"></script>
+</head>
+<body>
+
+<h1>C3</h1>
+
+<div id="chart"></div>
+
+<script>
+var chart = c3.generate({
+  data: {
+    x: 'x',
+    xFormat: '%Y-%m-%d',
+    url: 'c3-data.json',
+    mimeType: 'json'
+  },
+  axis: {
+    x: {
+      type: 'timeseries',
+      tick: {
+        format: '%Y-%m-%d'
+      }
+    }
+  },
+  size: {
+    height: 1200
+  }
+});
+</script>
+
+</body>
+</html>

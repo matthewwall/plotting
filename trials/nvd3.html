@@ -1,0 +1,67 @@
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>NVD3</title>
+
+<!-- nvd3 requires d3 3.4.4 or later -->
+<script src="d3-3.5.16/d3.min.js"></script>
+<link href="nvd3-master/build/nv.d3.min.css" rel="stylesheet">
+<script src="nvd3-master/build/nv.d3.min.js"></script>
+
+<style>
+body {
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 10pt;
+  background-color: #ffffff;
+}
+h1 {
+  font-size: 110%;
+  font-weight: bold;
+}
+h2 {
+  font-size: 100%;
+  font-weight: bold;
+}
+#nvd3 svg {
+  height: 1000px;
+}
+</style>
+
+<script>
+d3.json('nvd3-data.json', function(data) {
+ nv.addGraph(function() {
+     var chart = nv.models.stackedAreaChart()
+                   .x(function(d) { return d[0] })
+                   .y(function(d) { return d[1] })
+                   .useInteractiveGuideline(true)
+                   .clipEdge(true)
+                   .margin({right: 50});
+     //                       .margin({right: 100})
+     //                       .rightAlignYAxis(true)
+     //                       .transitionDuration(500)
+     //                       .showControls(true) // controls to choose mode
+     chart.xAxis.tickFormat(function(d) { 
+         return d3.time.format('%x')(new Date(d * 1000))
+//         return d3.time.format('%x')(new Date(d)) 
+     });
+     chart.yAxis.tickFormat(d3.format(',.0f'));
+     d3.select('#nvd3 svg')
+       .datum(data)
+       .call(chart);
+     nv.utils.windowResize(chart.update);
+     return chart;
+ });
+});
+</script>
+
+</head>
+<body>
+
+<h1>NVD3.js</h1>
+
+<div id='nvd3'><svg></svg></div>
+
+</body>
+</html>
+
+

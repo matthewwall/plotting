@@ -1,0 +1,36 @@
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>dygraphs</title>
+  <style>
+body {
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 10pt;
+  background-color: #ffffff;
+}
+h1 {
+  font-size: 110%;
+  font-weight: bold;
+}
+h2 {
+  font-size: 100%;
+  font-weight: bold;
+}
+  </style>
+  <script type="text/javascript" src="dygraph-combined-dev-1.1.1.js"></script>
+</head>
+<body>
+
+<h1>dygraphs</h1>
+
+<div id="chart"></div>
+
+<script>
+ g = new Dygraph(document.getElementById('chart'), "dygraph-data.csv",
+{
+  height: 1000
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,114 @@
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>metricsgraphics</title>
+  <style>
+body {
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 10pt;
+  background-color: #ffffff;
+}
+h1 {
+  font-size: 110%;
+  font-weight: bold;
+}
+h2 {
+  font-size: 100%;
+  font-weight: bold;
+}
+.legend {
+  width: 70%;
+}
+
+.mg-line6-color { stroke: #888888; }
+.mg-line7-color { stroke: #888888; }
+.mg-line8-color { stroke: #888888; }
+.mg-line9-color { stroke: #888888; }
+.mg-line10-color { stroke: #888888; }
+.mg-line11-color { stroke: #888888; }
+.mg-line12-color { stroke: #888888; }
+.mg-line13-color { stroke: #888888; }
+.mg-line14-color { stroke: #888888; }
+.mg-line15-color { stroke: #888888; }
+.mg-line16-color { stroke: #888888; }
+.mg-line17-color { stroke: #888888; }
+.mg-line18-color { stroke: #888888; }
+.mg-line19-color { stroke: #888888; }
+.mg-line20-color { stroke: #888888; }
+.mg-line21-color { stroke: #888888; }
+.mg-line22-color { stroke: #888888; }
+.mg-line23-color { stroke: #888888; }
+.mg-line24-color { stroke: #888888; }
+.mg-line25-color { stroke: #888888; }
+.mg-line26-color { stroke: #888888; }
+.mg-line27-color { stroke: #888888; }
+.mg-line28-color { stroke: #888888; }
+.mg-line29-color { stroke: #888888; }
+.mg-line30-color { stroke: #888888; }
+.mg-line31-color { stroke: #888888; }
+.mg-line32-color { stroke: #888888; }
+.mg-line33-color { stroke: #888888; }
+.mg-line34-color { stroke: #888888; }
+.mg-line35-color { stroke: #888888; }
+.mg-line36-color { stroke: #888888; }
+.mg-line37-color { stroke: #888888; }
+.mg-line38-color { stroke: #888888; }
+.mg-line39-color { stroke: #888888; }
+.mg-line40-color { stroke: #888888; }
+.mg-line41-color { stroke: #888888; }
+.mg-line42-color { stroke: #888888; }
+.mg-line43-color { stroke: #888888; }
+.mg-line44-color { stroke: #888888; }
+.mg-line45-color { stroke: #888888; }
+.mg-line46-color { stroke: #888888; }
+.mg-line47-color { stroke: #888888; }
+.mg-line48-color { stroke: #888888; }
+.mg-line49-color { stroke: #888888; }
+.mg-line50-color { stroke: #888888; }
+.mg-line51-color { stroke: #888888; }
+.mg-line52-color { stroke: #888888; }
+.mg-line53-color { stroke: #888888; }
+.mg-line54-color { stroke: #888888; }
+.mg-line55-color { stroke: #888888; }
+.mg-line56-color { stroke: #888888; }
+.mg-line57-color { stroke: #888888; }
+.mg-line58-color { stroke: #888888; }
+.mg-line59-color { stroke: #888888; }
+
+
+  </style>
+  <link href="metrics-graphics-2.9.0/dist/metricsgraphics.css" rel="stylesheet" type="text/css">
+  <script type="text/javascript" src="jquery-1.12.3.min.js"></script>
+  <script type="text/javascript" src="d3-3.5.16/d3.min.js"></script>
+  <script type="text/javascript" src="metrics-graphics-2.9.0/dist/metricsgraphics.js"></script>
+</head>
+<body>
+
+<h1>metricsgraphics</h1>
+
+<div id="chart"></div>
+<div class="legend"></div>
+
+<script>
+var labels = ["1wire","AcuLink","AcuLinkBridge","AcuRite","AcuRiteInternetBridge","Csv","Custom","DL4Logger","FileParse","FineOffsetUSB","Hackulink","Interceptor","KLP","KlimaLogg","Mcp2515","Meteostick","Mysql","Netlink","OWFS","ObserverIP","PeetBros","Raspberry_pi","RfxCmd","RfxCmdMB","Si1000","Simulator","SocketLogger","TE923","Ultimeter","Vantage","VantagePro2","VueISS","W0CHP","WMR100","WMR100EXT","WMR200","WMR300","WMR9x8","WS1","WS23xx","WS28xx","WS981","WX_LSVA","Wanet3","WeatherLink","WeatherLinkIP","netatmo","observerip","wanet3","totals"];
+
+d3.json("mg-data.json", function(data) {
+    for (var i=0; i<data.length; i++) {
+        data[i] = MG.convert.date(data[i], 'date');
+    }
+    MG.data_graphic({
+        title: "station history",
+        data: data,
+        width: 1000,
+        height: 1000,
+        right: 40,
+        target: '#chart',
+        legend: labels,
+        legend_target: '.legend',
+        aggregate_rollover: true
+    });
+});
+</script>
+
+</body>
+</html>

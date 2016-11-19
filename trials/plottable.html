@@ -1,0 +1,84 @@
+<html>
+<head>
+<meta charset="utf-8"/>
+<title>plottable</title>
+  <style>
+body {
+  font-family: Verdana, Arial, Helvetica, sans-serif;
+  font-size: 10pt;
+  background-color: #ffffff;
+}
+h1 {
+  font-size: 110%;
+  font-weight: bold;
+}
+h2 {
+  font-size: 100%;
+  font-weight: bold;
+}
+#chart {
+  height: 1000px;
+}
+  </style>
+
+  <link rel="stylesheet" href="plottable-master/plottable.css" charset="utf-8">
+  <script src="d3-3.5.16/d3.min.js"></script>
+  <script src="plottable-master/plottable.min.js"></script>
+
+</head>
+<body>
+
+<h1>Plottable</h1>
+
+<div><svg id="chart"></svg></div>
+
+<script>
+
+var xScale = new Plottable.Scales.Time();
+var yScale = new Plottable.Scales.Linear();
+var colorScale = new Plottable.Scales.Color();
+
+var xAxis = new Plottable.Axes.Time(xScale, "bottom");
+var yAxis = new Plottable.Axes.Numeric(yScale, "left");
+var yLabel = new Plottable.Components.AxisLabel("Temperature (ºF)", -90);
+
+var legend = new Plottable.Components.Legend(colorScale).maxEntriesPerRow(3);
+var plots = new Plottable.Components.Group();
+var panZoom = new Plottable.Interactions.PanZoom(xScale, null);
+panZoom.attachTo(plots);
+
+var table = new Plottable.Components.Table([
+  [null, legend],
+  [yAxis, plots],
+  [null, xAxis]
+]);
+
+table.renderTo("svg#chart");
+
+var fn = "plottable-demo-data.tsv";
+fn = "plottable-data.tsv";
+d3.tsv(fn, function(error, data) {
+  var parseDate = d3.time.format("%Y%m%d").parse;
+  var cityNames = d3.keys(data[0]).filter(function(key) { return key !== "date"; });
+  var cities = cityNames.map(function(name) {
+    return data.map(function(d) {
+//      return { date: parseDate(d.date), temperature: +d[name], name: name};
+      return { date: d.date, temperature: +d[name], name: name};
+    });
+  });
+
+  cities.forEach(function(city) {
+    plots.append(new Plottable.Plots.Line()
+      .addDataset(new Plottable.Dataset(city))
+      .x(function(d) { return d.date; }, xScale)
+      .y(function(d) { return d.temperature; }, yScale)
+      .attr("stroke", colorScale.scale(city[0].name))
+      .attr("stroke-width", 1)
+    );
+  });
+});
+
+</script>
+
+</body>
+</html>
